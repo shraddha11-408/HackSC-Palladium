@@ -1,5 +1,5 @@
-// Connection to a running SafeSC API (through the Vite proxy in development).
-// SafeSC incidents carry no location, so each source is pinned to a simulated camera.
+// Connection to a running Palladium API (through the Vite proxy in development).
+// Palladium incidents carry no location, so each source is pinned to a simulated camera.
 import type {Camera, Incident, IncidentType, Severity} from './types';
 
 export type CascadeStats = {
@@ -24,7 +24,7 @@ export function cameraForSource(sourceId: string, cameras: Camera[]) {
   return cameras[hash(sourceId) % cameras.length];
 }
 
-export function fromSafeSC(raw: any, cameras: Camera[]): Incident {
+export function fromPalladium(raw: any, cameras: Camera[]): Incident {
   const record = raw.record || {};
   const camera = cameraForSource(raw.source_id || raw.id, cameras);
   const event = record.observable_events?.[0];

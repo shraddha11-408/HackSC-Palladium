@@ -32,7 +32,7 @@ def main():
                 response=httpx.post(f"https://api.runpod.io/v2/pods/{pod['id']}/action",
                     headers={'Authorization':f'Bearer {token}'},json={'action':'stop'},timeout=40)
                 if response.status_code==200:
-                    print('Stopped SafeSC GPU at budget reserve or requested Sunday deadline.',flush=True)
+                    print('Stopped Palladium GPU at budget reserve or requested Sunday deadline.',flush=True)
                     return
                 raise RuntimeError(f'Stop returned HTTP {response.status_code}')
         except Exception as error:

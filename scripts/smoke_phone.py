@@ -1,4 +1,4 @@
-"""Exercise the real phone protocol through an authenticated SafeSC origin.
+"""Exercise the real phone protocol through an authenticated Palladium origin.
 
 Uses a clearly documented public test image, not the device camera. No fixture
 detector is enabled. A physical phone still requires a separate user smoke test.

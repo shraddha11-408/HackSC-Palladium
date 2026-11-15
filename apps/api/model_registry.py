@@ -42,7 +42,7 @@ tags:
 - lora
 - research
 ---
-# SafeSC adapter {version}
+# Palladium adapter {version}
 
 Selection at publication: **{selection}**. Publication never changes the running model.
 Base revision: `{report['base_revision']}`.

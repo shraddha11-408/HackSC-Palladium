@@ -5,7 +5,7 @@ import {Map} from 'react-map-gl/maplibre';
 import {buildLayers, type LayerToggles} from './layers';
 import {darkCampusStyle} from './mapStyle';
 import {arcPath, CAMPUS_CENTER, demoIncident, distance, makeCameras, makeOfficers, simulatedHistory} from './sim';
-import {existingIncidents, fromSafeSC, login, review, subscribe, type CascadeStats} from './live';
+import {existingIncidents, fromPalladium, login, review, subscribe, type CascadeStats} from './live';
 import {BottomBar, ConnectDialog, IncidentQueue, Legend, StatusStrip} from './Panels';
 import {BuildingCard, IncidentDetail, UnitsPanel} from './DispatchPanels';
 import {buildingAt, parseBuildings} from './buildings';
@@ -460,12 +460,12 @@ export default function App({embedded}: {embedded: boolean}) {
     const existing = await existingIncidents(signal);
     if (signal?.aborted) return;
     setIncidents((list) => [...existing.map((raw) => {
-      const i = fromSafeSC(raw, cameras);
+      const i = fromPalladium(raw, cameras);
       return {...i, buildingId: buildingAt(buildings, i.position)?.id};
     }), ...list.filter((i) => i.origin === 'demo')]);
     unsubscribe.current?.();
     unsubscribe.current = subscribe({
-      incident: (raw) => addIncident(fromSafeSC(raw, cameras)),
+      incident: (raw) => addIncident(fromPalladium(raw, cameras)),
       source: (raw) => {if (raw?.telemetry?.cascade) setCascade(raw.telemetry.cascade);},
       status: setLiveStatus,
     });

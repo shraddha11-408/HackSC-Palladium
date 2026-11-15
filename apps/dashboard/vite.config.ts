@@ -1,9 +1,9 @@
 import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
 
-// In development the dashboard proxies to a SafeSC API on :8000, so its login cookie
+// In development the dashboard proxies to a Palladium API on :8000, so its login cookie
 // is same-origin and the /ws/events socket carries it.
-const api = process.env.SAFESC_API || 'http://127.0.0.1:8000';
+const api = process.env.PALLADIUM_API || process.env.SAFESC_API || 'http://127.0.0.1:8000';
 
 export default defineConfig(({mode}) => ({
   base: mode === 'hosted' ? '/command/' : '/',

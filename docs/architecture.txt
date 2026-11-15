@@ -1,4 +1,4 @@
-SafeSC: deployed single-GPU architecture (November 14, 2026)
+Palladium: deployed single-GPU architecture (November 14, 2026)
 =========================================================
 
  PHONE: iPhone Safari / Android Chrome         REVIEWER: laptop browser

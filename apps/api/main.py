@@ -46,10 +46,10 @@ async def lifespan(app):
     await model_service.stop()
     await asyncio.to_thread(release_verifier)
 
-app=FastAPI(title='SafeSC',lifespan=lifespan)
+app=FastAPI(title='Palladium',lifespan=lifespan)
 def authenticated(request: Request):
     token=request.cookies.get('safesc_token') or request.headers.get('Authorization','').removeprefix('Bearer ')
-    if not token or not hmac.compare_digest(token,settings.app_token): raise HTTPException(401,'Sign in to SafeSC')
+    if not token or not hmac.compare_digest(token,settings.app_token): raise HTTPException(401,'Sign in to Palladium')
 
 from .live import router as live_router
 app.include_router(live_router)

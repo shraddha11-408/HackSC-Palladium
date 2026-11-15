@@ -48,7 +48,7 @@ secret = pathlib.Path('/etc/safesc-turn/shared-secret').read_text().strip()
 if len(secret) < 32 or any(c not in '0123456789abcdefABCDEF' for c in secret):
     raise SystemExit('Expected an existing strong hexadecimal relay secret')
 lines = [
-    '# Managed by SafeSC scripts/setup_turn.sh; contains a private shared secret.',
+    '# Managed by Palladium scripts/setup_turn.sh; contains a private shared secret.',
     'listening-port=443', 'listening-ip='+ip, 'relay-ip='+ip,
     'aux-server='+ip+':3478', 'min-port=49160', 'max-port=49200',
     'realm='+ (os.environ['TURN_DOMAIN'] or 'safesc-turn'),

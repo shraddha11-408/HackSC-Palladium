@@ -87,9 +87,9 @@ conda activate relift
 python scripts/download_weights.py
 ```
 
-Set `ENABLE_RELIFT=true` and `RELIFT_PYTHON` to its isolated environment executable. The Runpod installation uses a Python 3.10 uv environment populated with the exact upstream `environment.yml` pip requirements; it does not require conda. SafeSC invokes that Python's `scripts/demo_video.py <clip> --out <directory> --num_frames 84`, first on the original, then on the conservative enhanced stream when available. DA3/AllTracker passed the real 84-frame test. Optional CoWTracker/VGGT-Omega checkpoints are not required or installed. Preserve the separate checkpoint licenses from `configs/weights.yaml`.
+Set `ENABLE_RELIFT=true` and `RELIFT_PYTHON` to its isolated environment executable. The Runpod installation uses a Python 3.10 uv environment populated with the exact upstream `environment.yml` pip requirements; it does not require conda. Palladium invokes that Python's `scripts/demo_video.py <clip> --out <directory> --num_frames 84`, first on the original, then on the conservative enhanced stream when available. DA3/AllTracker passed the real 84-frame test. Optional CoWTracker/VGGT-Omega checkpoints are not required or installed. Preserve the separate checkpoint licenses from `configs/weights.yaml`.
 
-The real `tracks.npz` is retained, including geometry and camera arrays. SafeSC exports up to roughly 250 sampled points per frame for the browser and marks model units as nonmetric. Track-to-person association is not claimed without reliable mapping.
+The real `tracks.npz` is retained, including geometry and camera arrays. Palladium exports up to roughly 250 sampled points per frame for the browser and marks model units as nonmetric. Track-to-person association is not claimed without reliable mapping.
 
 ## OneStreamer and BVI-Mamba
 

@@ -1,5 +1,5 @@
 // Messages between the command dashboard and officer phones.
-// Transport: the SafeSC relay (/ws/dispatch/{room}) when the API is reachable, so phones on
+// Transport: the Palladium relay (/ws/dispatch/{room}) when the API is reachable, so phones on
 // another device work; always also a BroadcastChannel, so tabs on the same machine work offline.
 import type {LngLat, Priority, UnitStatus} from './types';
 

@@ -1,7 +1,7 @@
 # Public campus activity data
 
 The [November 14, 2026 snapshot](2026-11-14/manifest.json) contains the complete
-**75,686-report** minimized historical dataset used by SafeSC, with occurrence
+**75,686-report** minimized historical dataset used by Palladium, with occurrence
 dates January 1, 2010 through October 31, 2026 inside the published UPC Lyft-zone
 approximation. It also contains every selected source page referenced by the
 import manifest, OSM street geometry and attribution, pedestrian-survey evidence,

@@ -48,7 +48,7 @@ def main():
         if not args.deploy:
             return
         if any(i['label']=='safesc-gpu' for i in instances):
-            raise SystemExit('SafeSC instance already exists; refusing duplicate')
+            raise SystemExit('Palladium instance already exists; refusing duplicate')
         if hourly>2 or not available:
             raise SystemExit('Price guard or availability guard blocked provisioning')
         keypath=ROOT/'data'/'deploy_key'

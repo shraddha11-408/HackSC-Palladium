@@ -14,9 +14,9 @@ async function listen(server) {
 }
 async function fixture(t, handler) {
   const dist = await mkdtemp(join(tmpdir(), 'safesc-gateway-'));
-  await writeFile(join(dist, 'index.html'), '<h1>SafeSC</h1>');
+  await writeFile(join(dist, 'index.html'), '<h1>Palladium</h1>');
   await mkdir(join(dist, 'command', 'assets'), {recursive:true});
-  await writeFile(join(dist, 'command', 'index.html'), '<h1>SafeSC Command</h1>');
+  await writeFile(join(dist, 'command', 'index.html'), '<h1>Palladium Command</h1>');
   await writeFile(join(dist, 'command', 'assets', 'worker.js'), '/* map worker */');
   const backend = http.createServer(handler || ((_req, res) => res.end('upstream')));
   const backendOrigin = await listen(backend);
@@ -32,7 +32,7 @@ async function fixture(t, handler) {
 
 test('serves phone SPA and readiness without backend, excludes private files', async t => {
   const {origin} = await fixture(t);
-  assert.match(await (await fetch(origin + '/capture')).text(), /SafeSC/);
+  assert.match(await (await fetch(origin + '/capture')).text(), /Palladium/);
   assert.equal((await fetch(origin + '/')).headers.get('referrer-policy'), 'strict-origin-when-cross-origin');
   assert.equal((await fetch(origin + '/_health')).status, 200);
   const home = await fetch(origin + '/', {redirect:'manual'});
@@ -48,13 +48,13 @@ test('serves the command dashboard, officer links and command assets', async t =
   for (const path of ['/command', '/command/', '/command/?unit=officer-3&room=example']) {
     const response = await fetch(origin + path);
     assert.equal(response.status, 200, path);
-    assert.equal(await response.text(), '<h1>SafeSC Command</h1>', path);
+    assert.equal(await response.text(), '<h1>Palladium Command</h1>', path);
   }
   const worker = await fetch(origin + '/command/assets/worker.js');
   assert.equal(await worker.text(), '/* map worker */');
   assert.match(worker.headers.get('cache-control'), /immutable/);
   assert.equal((await fetch(origin + '/command/assets/missing.js')).status, 404);
-  assert.equal(await (await fetch(origin + '/commander')).text(), '<h1>SafeSC</h1>');
+  assert.equal(await (await fetch(origin + '/commander')).text(), '<h1>Palladium</h1>');
 });
 
 test('streams upload body, auth cookies, compressed responses and media ranges', async t => {

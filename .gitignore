@@ -219,7 +219,7 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-# SafeSC project exclusions
+# Palladium project exclusions
 # Credentials
 .env
 .env.*
@@ -245,7 +245,7 @@ evaluation/**/*.webm
 *.tsbuildinfo
 .DS_Store
 
-# SafeSC private operations and credentials
+# Palladium private operations and credentials
 /docs/local/
 /docs/screenshots/
 *.sqlite

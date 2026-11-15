@@ -21,12 +21,12 @@ Laptop dashboard                 Phone Safari / Chrome
 
 ## Import and publish
 
-1. Import `https://github.com/adiv-1/SafeSC` into Replit. Switch to the **replit-ui** deployment branch before running. It contains only the Node gateway, React source and deployment documentation; the complete application and public activity snapshot remain on **main**. In the Replit Shell, run `git fetch origin replit-ui:refs/remotes/origin/replit-ui` then `git switch --track -c replit-ui origin/replit-ui`. A GitHub import may initially select main even when given a branch URL.
-2. In Replit Secrets set **only** `SAFESC_BACKEND_ORIGIN` to the current GPU app origin, for example `https://YOUR-POD-ID-8000.proxy.runpod.net`. It is an address, not a provider key. The current origin is recorded locally in `data/runpod-access.txt`.
-3. Click Run. The configured command builds the UI and binds the gateway to `0.0.0.0:3000`. Check the preview shows the SafeSC sign-in screen.
-4. Open Publishing → Adjust settings. Choose **Reserved VM**, web server, smallest available machine for a single-phone demo. Set build to `npm run build`, run to `npm start`, local port `3000` / external port `80`. Confirm `SAFESC_BACKEND_ORIGIN` is also present in the published environment.
+1. Import `https://github.com/shraddha11-408/HackSC-Palladium` into Replit and keep the **main** branch. It contains the Node gateway, both React apps and the backend source; Replit only builds and runs the gateway and UI (see the scanner note below if publishing is blocked).
+2. In Replit Secrets set **only** `PALLADIUM_BACKEND_ORIGIN` to the current GPU app origin, for example `https://YOUR-POD-ID-8000.proxy.runpod.net`. It is an address, not a provider key. The current origin is recorded locally in `data/runpod-access.txt`.
+3. Click Run. The configured command builds the UI and binds the gateway to `0.0.0.0:3000`. Check the preview shows the Palladium sign-in screen. (`SAFESC_BACKEND_ORIGIN` is still accepted as a fallback.)
+4. Open Publishing → Adjust settings. Choose **Reserved VM**, web server, smallest available machine for a single-phone demo. Set build to `npm run build`, run to `npm start`, local port `3000` / external port `80`. Confirm `PALLADIUM_BACKEND_ORIGIN` is also present in the published environment.
 5. Check the displayed publishing charge against the trial's remaining credits before publishing. The trial is not a guarantee of unlimited deployment or video bandwidth. Replit's November 14 pricing documentation lists the shared 0.5 vCPU / 2 GB VM at $15/month before credits. Autoscale can serve the dashboard, but Reserved VM avoids scale-to-zero interruptions for long-lived phone WebSockets. Static hosting cannot run this proxy.
-6. Publish, open the HTTPS `.replit.app` URL, and enter the existing SafeSC workspace token. No additional reviewer token is configured in Replit. The login cookie belongs to the Replit app origin; the gateway forwards it to the existing authenticated backend.
+6. Publish, open the HTTPS `.replit.app` URL, and enter the existing Palladium workspace token. No additional reviewer token is configured in Replit. The login cookie belongs to the Replit app origin; the gateway forwards it to the existing authenticated backend.
 7. Click Connect phone **on the published Replit dashboard**, scan the new QR code and start the camera. Pairing links use the dashboard's current origin automatically, so both the phone capture page and its WebSocket use Replit. Keep the phone page foregrounded. Existing links from the Runpod dashboard still point at Runpod.
 8. The **Command center** opens after sign-in and connects with the existing reviewer session. Officer pairing links open under `/command/` and relay messages through `/ws/dispatch/{room}`. Use a Runpod backend built from the same source revision to enable dispatch recommendations, approval auditing and the phone relay. Configure `ANTHROPIC_API_KEY` on Runpod if you want Claude recommendations. The command view uses simulated units.
 
@@ -39,7 +39,7 @@ Replit deployment branch excludes this data: its gateway serves the authenticate
 preloaded analysis from Runpod. Updating the activity feature requires both the
 backend's `/api/activity/exploration-bundle` endpoint and the new Replit UI.
 
-Both Runpod and Replit process traffic when this route is used. If the GPU pod stops or its origin changes, the UI still loads, but API/video operations fail until the pod is available or `SAFESC_BACKEND_ORIGIN` is updated and the deployment restarted. Replit hosting does not extend the Runpod budget or its Sunday shutdown deadline.
+Both Runpod and Replit process traffic when this route is used. If the GPU pod stops or its origin changes, the UI still loads, but API/video operations fail until the pod is available or `PALLADIUM_BACKEND_ORIGIN` is updated and the deployment restarted. Replit hosting does not extend the Runpod budget or its Sunday shutdown deadline.
 
 ## Update the deployment branch
 
@@ -54,7 +54,7 @@ The first full-repository Replit publish was blocked by its scanner's Python/GPU
 ```sh
 npm run test:gateway
 npm run build
-SAFESC_BACKEND_ORIGIN=https://YOUR-POD-ID-8000.proxy.runpod.net npm start
+PALLADIUM_BACKEND_ORIGIN=https://YOUR-POD-ID-8000.proxy.runpod.net npm start
 ```
 
 Test sign-in, historical map, training-video playback and seeking, incident review, phone QR origin, frame ACKs and dashboard live status on the **published** URL. `/_health` reports only gateway readiness; `/api/health` requires the existing token and checks the actual GPU backend. The public Runpod URL remains a fallback while Replit is configured.
@@ -73,7 +73,7 @@ The gateway sends `Referrer-Policy: strict-origin-when-cross-origin`: OpenStreet
 
 The full-zone activity update was merged into GitHub `main`, exported to
 `replit-ui`, pulled into the existing Replit project, and republished to
-[SafeSC Campus activity](https://safe-sc.replit.app/#activity). The Runpod backend
+[Palladium Campus activity](https://safe-sc.replit.app/#activity). The Runpod backend
 received the new authenticated bundle endpoint and prepared analysis without
 replacing its historical or incident database. The backend restart was performed
 only after confirming no active sources or pending jobs.

@@ -1,4 +1,4 @@
-"""Run on the GPU host: restart only a verified idle SafeSC API process."""
+"""Run on the GPU host: restart only a verified idle Palladium API process."""
 import argparse,os,signal,sqlite3,subprocess,time
 from pathlib import Path
 import httpx

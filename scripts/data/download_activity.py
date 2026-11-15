@@ -69,7 +69,7 @@ def run():
     ring=boundary['geometry']['coordinates'][0]
     xs,ys=zip(*ring); bbox=[min(xs)-.0002,min(ys)-.0002,max(xs)+.0002,max(ys)+.0002]
     records={};quality=Counter();sources=[]
-    with httpx.Client(timeout=120,follow_redirects=True,headers={'User-Agent':'SafeSC-USC-Hackathon/0.1'}) as client:
+    with httpx.Client(timeout=120,follow_redirects=True,headers={'User-Agent':'Palladium-USC-Hackathon/0.1'}) as client:
         for ds,title,nibrs in DATASETS:
             la,lo=('hndrdth_lat','hndrdth_lon') if nibrs else ('lat','lon')
             fields=f'caseno,uniquenibrno,date_occ,date_rptd,time_occ,{la},{lo},nibr_code,nibr_description' if nibrs else f'dr_no,date_occ,date_rptd,time_occ,{la},{lo},crm_cd,crm_cd_desc'

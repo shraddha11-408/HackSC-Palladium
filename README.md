@@ -1,10 +1,10 @@
-# SafeSC
+# Palladium
 
 **Campus video review with preserved context and a human decision.** Built for the AI@USC hackathon.
 
-SafeSC connects a phone camera or uploaded video to a streaming vision pipeline, preserves potentially relevant moments, and gives a reviewer original footage, uncertainty, and clearly labeled derived artifacts. A separate campus-activity map explores public LAPD reports near USC.
+Palladium connects a phone camera or uploaded video to a streaming vision pipeline, preserves potentially relevant moments, and gives a reviewer original footage, uncertainty, and clearly labeled derived artifacts. A separate campus-activity map explores public LAPD reports near USC.
 
-[Open the hosted SafeSC dashboard](https://safe-sc.replit.app) · Workspace access token required. The UI runs on Replit; inference and working media stay on Runpod. Original incident windows, thumbnails and review metadata are backed up to private Supabase Storage.
+[Open the hosted Palladium dashboard](https://safe-sc.replit.app) · Workspace access token required. The UI runs on Replit; inference and working media stay on Runpod. Original incident windows, thumbnails and review metadata are backed up to private Supabase Storage.
 
 ## What works today
 
@@ -56,8 +56,8 @@ See the [project documentation](docs/overview/README.md) and [full text diagram]
 Requires Python 3.11, Node.js 22, and [uv](https://docs.astral.sh/uv/). The control plane runs on macOS or Linux; real model inference requires Linux and NVIDIA CUDA.
 
 ```bash
-git clone git@github.com:adiv-1/SafeSC.git
-cd SafeSC
+git clone https://github.com/shraddha11-408/HackSC-Palladium.git
+cd HackSC-Palladium
 uv sync --python 3.11 --frozen --extra test
 npm ci --prefix apps/web
 npm run build --prefix apps/web

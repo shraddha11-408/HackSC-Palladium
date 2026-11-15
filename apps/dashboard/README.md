@@ -1,4 +1,4 @@
-# SafeSC 3D command dashboard
+# Palladium 3D command dashboard
 
 A full-screen 3D view of USC for the dispatcher. Live incident beams pulse until someone reviews them. Approving an incident sends the nearest officer, shown as an animated arc. Hexagon columns show history by hour of day, and camera cones show how much of campus is watched live and how much is AI triaged. Every layer is labelled Real, Demo, Simulated or Estimate.
 
@@ -24,16 +24,16 @@ Press **D**, or click **Stage demo incident**, to fire a staged event.
 - **Google Photorealistic 3D Tiles:** set `VITE_GOOGLE_MAPS_API_KEY` in `apps/dashboard/.env` and enable the Map Tiles API for that key. Check pricing and quotas first; we have not verified them, and we have not tested this mode with a real key.
 - **MapLibre fallback (default):** OpenFreeMap vector tiles with extruded OSM buildings in a dark style. It's free, needs no key and works on poor wifi.
 
-### Connect to a live SafeSC
+### Connect to a live Palladium
 
-1. Run the SafeSC API on `:8000` (`STREAMING_MODEL=cascade` is recommended).
-2. In the dashboard, click **Connect SafeSC**. If prompted, enter the token from `data/app_token`.
+1. Run the Palladium API on `:8000` (`STREAMING_MODEL=cascade` is recommended).
+2. In the dashboard, click **Connect Palladium**. If prompted, enter the token from `data/app_token`.
 
-Vite proxies `/api` and `/ws` to the API. Set `SAFESC_API` to point the proxy somewhere else. SafeSC sources carry no location, so live incidents are pinned to **simulated** camera positions.
+Vite proxies `/api` and `/ws` to the API. Set `PALLADIUM_API` to point the proxy somewhere else. Palladium sources carry no location, so live incidents are pinned to **simulated** camera positions.
 
 ## AI dispatch agent
 
-When an incident is selected, the SafeSC backend's dispatch agent (Claude, model from `DISPATCH_AGENT_MODEL`, default `claude-opus-5-5`) reads the incident and the position, status and ETA of every unit stationed on campus. It recommends:
+When an incident is selected, the Palladium backend's dispatch agent (Claude, model from `DISPATCH_AGENT_MODEL`, default `claude-opus-5-5`) reads the incident and the position, status and ETA of every unit stationed on campus. It recommends:
 
 - which units to send
 - an urgency level (critical, high, moderate or low) and a priority (P1 to P3)
@@ -42,7 +42,7 @@ When an incident is selected, the SafeSC backend's dispatch agent (Claude, model
 - cautions
 - a short outreach message per unit
 
-**Human in the loop.** The person monitoring reviews the recommendation and can untick units. Nothing is sent until they press **"Approve — agent contacts N units"**. Approval is recorded in `data/dispatch_audit.jsonl` on the SafeSC server. The agent's messages then go to the units' phones (officer page), and the units travel to the site.
+**Human in the loop.** The person monitoring reviews the recommendation and can untick units. Nothing is sent until they press **"Approve — agent contacts N units"**. Approval is recorded in `data/dispatch_audit.jsonl` on the Palladium server. The agent's messages then go to the units' phones (officer page), and the units travel to the site.
 
 **Endpoints** (reviewer login required):
 
@@ -51,9 +51,9 @@ When an incident is selected, the SafeSC backend's dispatch agent (Claude, model
 
 **Setup:**
 
-1. Set `ANTHROPIC_API_KEY` (and optionally `DISPATCH_AGENT_MODEL`) in the SafeSC `.env`.
+1. Set `ANTHROPIC_API_KEY` (and optionally `DISPATCH_AGENT_MODEL`) in the Palladium `.env`.
 2. Start the API on port 8000.
-3. In the dashboard, click **Connect SafeSC** and enter the token from `data/app_token`.
+3. In the dashboard, click **Connect Palladium** and enter the token from `data/app_token`.
 
 **Fallback.** Without a key, or if the API is unreachable, the dashboard shows a rules-based plan with the same layout, clearly labelled **"Rules fallback"**. Model calls are logged to `data/dispatch_agent_usage.jsonl`.
 
@@ -64,7 +64,7 @@ When an incident is selected, the SafeSC backend's dispatch agent (Claude, model
 | Data | Source | Label on screen |
 |---|---|---|
 | Bike racks, buildings | OpenStreetMap via `scripts/build_osm_data.py` (© OpenStreetMap contributors, ODbL) | Real |
-| Live incidents | Staged events, or a connected SafeSC | Demo / Live |
+| Live incidents | Staged events, or a connected Palladium | Demo / Live |
 | Camera positions, officer roster | Invented; deliberately **not** real DPS camera locations | Simulated |
 | History columns | Simulated until `public/osm/history.json` exists | Simulated |
 | Cost today | $0.60/h per L4 GPU at 40 cameras per GPU, from the feasibility brief; not measured | Estimate |
@@ -104,7 +104,7 @@ One app, four pages behind the hash router: **Trends** (`#/trends`, the default)
 | What-if sandbox | Trends, "What-if" | Monte Carlo of 3,000 to 10,000 late-night walks. Levers: Free Lyft boundary cut, ambassadors off duty, walkers, Lyft usage. Compares today, no re-plan, and re-plan | Scenario simulator with stated assumptions, **not a crime prediction**; the Lyft boundary is the approximate polygon in `docs/` |
 | Incident dashboard | Incidents | KPIs, hour and 13-week charts, top locations, filterable log | Simulated history |
 | 200 m alerts | Live, after Approve | Alert agent notifies all DPS units and every app user inside 200 m, files an incident report | Delivery is simulated; the geofence is real: open `?app=1` pages and pick locations to see only nearby phones alert |
-| Incident report | Live | Report with placeholder descriptors | **Hard-coded placeholder values** for testing the alert flow. The vision pipeline does not estimate them and SafeSC never infers identity or demographics |
+| Incident report | Live | Report with placeholder descriptors | **Hard-coded placeholder values** for testing the alert flow. The vision pipeline does not estimate them and Palladium never infers identity or demographics |
 | Agent debate | Live, incident card | Threat agent vs Devil's Advocate answer typed questions in parallel; a 3-bullet consensus brief explains why the alert was escalated, downgraded or suppressed. Press **F** or "Stage false alarm" for a benign look-alike | Rules gate tested (sub-millisecond). Claude gate is wired but **never run against the real API** (no key). `JevGate` is a placeholder: the vendor API and its latency and cost claims are unverified |
 | Intercept vector | Live, after Approve | Projects the escape heading over the walkway graph for 45 s, hands off to cameras, picks choke points other units can reach first, and routes the victim to a safe haven. A second human approval moves the units | Heuristic; the heading is a **simulated input**. Some headings give no interceptable path and the panel says so |
 

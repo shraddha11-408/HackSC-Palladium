@@ -44,7 +44,7 @@ EOF
 chmod 0750 /etc/letsencrypt/renewal-hooks/deploy/safesc-turn
 cat > /etc/systemd/system/safesc-certbot-renew.service <<'EOF'
 [Unit]
-Description=Renew SafeSC TURN short-lived IP certificate
+Description=Renew Palladium TURN short-lived IP certificate
 After=network-online.target
 Wants=network-online.target
 [Service]
@@ -53,7 +53,7 @@ ExecStart=/opt/certbot/bin/certbot renew --quiet
 EOF
 cat > /etc/systemd/system/safesc-certbot-renew.timer <<'EOF'
 [Unit]
-Description=Check SafeSC TURN certificate twice daily
+Description=Check Palladium TURN certificate twice daily
 [Timer]
 OnCalendar=*-*-* 00,12:00:00
 RandomizedDelaySec=1800

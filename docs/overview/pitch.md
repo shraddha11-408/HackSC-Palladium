@@ -1,4 +1,4 @@
-# SafeSC — pitch outline
+# Palladium — pitch outline
 
 1. Problem: video is difficult to monitor continuously; reviewers need a way to prioritize observable events with context.
 2. Product: phone/upload input, temporal AI observations, preserved incident windows, human review.

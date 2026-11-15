@@ -1,4 +1,4 @@
-"""SSH into the recorded SafeSC pod; never copy provider administrative tokens."""
+"""SSH into the recorded Palladium pod; never copy provider administrative tokens."""
 import json
 import subprocess
 import sys

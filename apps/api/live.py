@@ -75,7 +75,7 @@ def peer_summary(peer):
 async def live_status(request: Request, source_id: str):
     token = request.cookies.get('safesc_token') or request.headers.get('Authorization', '').removeprefix('Bearer ')
     if not token or not hmac.compare_digest(token, settings.app_token):
-        raise HTTPException(401, 'Sign in to SafeSC')
+        raise HTTPException(401, 'Sign in to Palladium')
     if not get(Source, source_id):
         raise HTTPException(404, 'Source not found')
     cutoff = time.time()-120
@@ -156,7 +156,7 @@ async def live_signaling(ws: WebSocket):
             source_id = pairing['source_id']
         elif role == 'viewer':
             if not hmac.compare_digest(ws.cookies.get('safesc_token', ''), settings.app_token):
-                await ws.close(4401, 'Sign in to SafeSC')
+                await ws.close(4401, 'Sign in to Palladium')
                 return
             source_id = hello.get('source_id', '')
         else:

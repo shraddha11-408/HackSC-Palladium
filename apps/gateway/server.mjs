@@ -27,13 +27,13 @@ function reply(res, status, message) {
   res.end(JSON.stringify({detail:message}));
 }
 
-export function createGateway({backendOrigin = process.env.SAFESC_BACKEND_ORIGIN, dist = defaultDist} = {}) {
-  if (!backendOrigin) throw new Error('Set SAFESC_BACKEND_ORIGIN to the Runpod HTTPS origin');
+export function createGateway({backendOrigin = process.env.PALLADIUM_BACKEND_ORIGIN || process.env.SAFESC_BACKEND_ORIGIN, dist = defaultDist} = {}) {
+  if (!backendOrigin) throw new Error('Set PALLADIUM_BACKEND_ORIGIN to the Runpod HTTPS origin');
   const backend = new URL(backendOrigin);
   const local = ['127.0.0.1', 'localhost', '[::1]'].includes(backend.hostname);
   if ((backend.protocol !== 'https:' && !(local && backend.protocol === 'http:')) ||
       backend.username || backend.password || backend.pathname !== '/' || backend.search || backend.hash) {
-    throw new Error('SAFESC_BACKEND_ORIGIN must be an HTTPS origin (HTTP allowed only for localhost)');
+    throw new Error('PALLADIUM_BACKEND_ORIGIN must be an HTTPS origin (HTTP allowed only for localhost)');
   }
   const transport = backend.protocol === 'https:' ? https : http;
   const root = resolve(dist);
@@ -148,7 +148,7 @@ export function createGateway({backendOrigin = process.env.SAFESC_BACKEND_ORIGIN
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const server = createGateway();
   const port = Number(process.env.PORT || 3000);
-  server.listen(port, '0.0.0.0', () => console.log(`SafeSC UI gateway listening on ${port}`));
+  server.listen(port, '0.0.0.0', () => console.log(`Palladium UI gateway listening on ${port}`));
   for (const signal of ['SIGTERM', 'SIGINT']) process.on(signal, () => {
     server.closeStreams(); server.close(() => process.exit(0));
   });

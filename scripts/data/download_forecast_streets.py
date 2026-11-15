@@ -20,7 +20,7 @@ def main():
     for endpoint in ('https://overpass-api.de/api/interpreter', 'https://overpass.kumi.systems/api/interpreter'):
         try:
             response = httpx.get(endpoint, params={'data': query}, timeout=110,
-                headers={'User-Agent': 'SafeSC-Activity-Research/0.1'})
+                headers={'User-Agent': 'Palladium-Activity-Research/0.1'})
             response.raise_for_status()
             break
         except httpx.HTTPError:

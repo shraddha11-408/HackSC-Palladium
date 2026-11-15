@@ -37,7 +37,7 @@ def main():
     readme = git('show', f'{source}:docs/overview/replit.md')
     blob = git('hash-object', '-w', '--stdin', input=readme).strip()
     entries.append(b'100644 blob ' + blob + b'\tREADME.md')
-    provenance = (f'SafeSC UI deployment\nSource commit: {source}\n'
+    provenance = (f'Palladium UI deployment\nSource commit: {source}\n'
                   'Runtime: Node gateway and built React UI only.\n'
                   'Python API, GPU models and storage remain on Runpod.\n').encode()
     blob = git('hash-object', '-w', '--stdin', input=provenance).strip()

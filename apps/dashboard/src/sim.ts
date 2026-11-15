@@ -136,7 +136,7 @@ export function simulatedHistory(buildings: Building[], racks: Rack[]): HistoryP
 
 type Script = {type: IncidentType; severity: Severity; near: 'rack' | 'building'; place: string; observation: string; evidence: string[]; uncertainty: string; confidence: number};
 
-// Staged events in the shape the SafeSC cascade emits. Labelled "Demo" on screen.
+// Staged events in the shape the Palladium cascade emits. Labelled "Demo" on screen.
 const SCRIPTS: Script[] = [
   {type: 'rack_activity', severity: 'WATCH', near: 'rack', place: 'Kaprielian Hall',
     observation: 'person_4 stayed at the bike rack for 63 s, then a parked bicycle left the rack zone',
